@@ -114,7 +114,7 @@ export default function GraphCanvas({
     ctx.stroke()
 
     // Label at mid-zoom+
-    if (globalScale > 2.5 || isHighlighted || isHovered) {
+    if (isHighlighted || isHovered) {
       const label = (node.label || node.id).slice(0, 18)
       const fontSize = Math.max(8, 10 / globalScale)
       ctx.font = `${fontSize}px Inter, sans-serif`
