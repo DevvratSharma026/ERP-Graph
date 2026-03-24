@@ -1,0 +1,94 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg-base:      #0e0f11;
+  --bg-panel:     #14161a;
+  --bg-card:      #1c1f26;
+  --bg-hover:     #232730;
+  --bg-input:     #1a1d24;
+
+  --border:       #2a2d36;
+  --border-light: #363a47;
+
+  --text-primary:   #e8eaf0;
+  --text-secondary: #8b91a8;
+  --text-muted:     #555b72;
+
+  --accent:       #4f7df3;
+  --accent-hover: #6b93f5;
+  --accent-dim:   rgba(79,125,243,0.15);
+
+  --green:        #34d399;
+  --amber:        #fbbf24;
+  --red:          #f87171;
+  --purple:       #a78bfa;
+
+  /* Node type colors */
+  --node-customer:  #7c6af7;
+  --node-order:     #4f7df3;
+  --node-item:      #3b6fd4;
+  --node-delivery:  #2dd4bf;
+  --node-billing:   #f59e0b;
+  --node-journal:   #f97316;
+  --node-payment:   #34d399;
+  --node-product:   #a3e635;
+  --node-plant:     #94a3b8;
+  --node-address:   #64748b;
+
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+
+  --shadow-md: 0 4px 20px rgba(0,0,0,0.4);
+  --shadow-lg: 0 8px 40px rgba(0,0,0,0.6);
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  background: var(--bg-base);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Scrollbars */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-light); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #4a5068; }
+
+/* Utility */
+.mono { font-family: var(--font-mono); }
+.truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.fade-in { animation: fadeIn 0.2s ease; }
+
+/* Loading spinner */
+.spinner {
+  width: 18px; height: 18px;
+  border: 2px solid var(--border-light);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  display: inline-block;
+}

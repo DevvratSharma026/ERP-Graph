@@ -1,0 +1,205 @@
+{
+  "customers": {
+    "columns": [
+      "customer_id",
+      "name",
+      "segment",
+      "country"
+    ],
+    "pk": "customer_id",
+    "labelCol": "name"
+  },
+  "products": {
+    "columns": [
+      "material_id",
+      "description",
+      "category",
+      "unit_price"
+    ],
+    "pk": "material_id",
+    "labelCol": "description"
+  },
+  "plants": {
+    "columns": [
+      "plant_id",
+      "name",
+      "location"
+    ],
+    "pk": "plant_id",
+    "labelCol": "name"
+  },
+  "addresses": {
+    "columns": [
+      "address_id",
+      "customer_id",
+      "city",
+      "country"
+    ],
+    "pk": "address_id",
+    "labelCol": "city"
+  },
+  "sales_orders": {
+    "columns": [
+      "order_id",
+      "customer_id",
+      "order_date",
+      "status",
+      "total_amount"
+    ],
+    "pk": "order_id",
+    "labelCol": "order_id"
+  },
+  "sales_order_items": {
+    "columns": [
+      "item_id",
+      "order_id",
+      "material_id",
+      "quantity",
+      "net_value",
+      "plant_id"
+    ],
+    "pk": "item_id",
+    "labelCol": "item_id"
+  },
+  "deliveries": {
+    "columns": [
+      "delivery_id",
+      "order_id",
+      "customer_id",
+      "plant_id",
+      "delivery_status"
+    ],
+    "pk": "delivery_id",
+    "labelCol": "delivery_id"
+  },
+  "billing_docs": {
+    "columns": [
+      "billing_id",
+      "delivery_id",
+      "order_id",
+      "billing_date",
+      "net_value"
+    ],
+    "pk": "billing_id",
+    "labelCol": "billing_id"
+  },
+  "journal_entries": {
+    "columns": [
+      "journal_id",
+      "billing_id",
+      "amount",
+      "posting_date"
+    ],
+    "pk": "journal_id",
+    "labelCol": "journal_id"
+  },
+  "payments": {
+    "columns": [
+      "payment_id",
+      "billing_id",
+      "customer_id",
+      "amount",
+      "payment_method"
+    ],
+    "pk": "payment_id",
+    "labelCol": "payment_id"
+  },
+  "_edges": [
+    {
+      "from": "sales_orders",
+      "to": "customers",
+      "fromKey": "customer_id",
+      "toKey": "customer_id",
+      "label": "PLACED_BY",
+      "verified": true
+    },
+    {
+      "from": "sales_order_items",
+      "to": "sales_orders",
+      "fromKey": "order_id",
+      "toKey": "order_id",
+      "label": "BELONGS_TO",
+      "verified": true
+    },
+    {
+      "from": "sales_order_items",
+      "to": "products",
+      "fromKey": "material_id",
+      "toKey": "material_id",
+      "label": "REFS_MATERIAL",
+      "verified": true
+    },
+    {
+      "from": "sales_order_items",
+      "to": "plants",
+      "fromKey": "plant_id",
+      "toKey": "plant_id",
+      "label": "SOURCED_FROM",
+      "verified": true
+    },
+    {
+      "from": "deliveries",
+      "to": "sales_orders",
+      "fromKey": "order_id",
+      "toKey": "order_id",
+      "label": "SHIPS_VIA",
+      "verified": true
+    },
+    {
+      "from": "deliveries",
+      "to": "customers",
+      "fromKey": "customer_id",
+      "toKey": "customer_id",
+      "label": "DELIVERS_TO",
+      "verified": true
+    },
+    {
+      "from": "deliveries",
+      "to": "plants",
+      "fromKey": "plant_id",
+      "toKey": "plant_id",
+      "label": "AT_PLANT",
+      "verified": true
+    },
+    {
+      "from": "billing_docs",
+      "to": "deliveries",
+      "fromKey": "delivery_id",
+      "toKey": "delivery_id",
+      "label": "BILLED_AS",
+      "verified": true
+    },
+    {
+      "from": "billing_docs",
+      "to": "sales_orders",
+      "fromKey": "order_id",
+      "toKey": "order_id",
+      "label": "FOR_ORDER",
+      "verified": true
+    },
+    {
+      "from": "journal_entries",
+      "to": "billing_docs",
+      "fromKey": "billing_id",
+      "toKey": "billing_id",
+      "label": "POSTS_TO",
+      "verified": true
+    },
+    {
+      "from": "payments",
+      "to": "billing_docs",
+      "fromKey": "billing_id",
+      "toKey": "billing_id",
+      "label": "SETTLES",
+      "verified": true
+    },
+    {
+      "from": "addresses",
+      "to": "customers",
+      "fromKey": "customer_id",
+      "toKey": "customer_id",
+      "label": "BELONGS_TO",
+      "verified": true
+    }
+  ]
+}
