@@ -20,9 +20,9 @@ A full-stack system that unifies fragmented ERP data (Orders, Deliveries, Billin
 
 ```
 ┌──────────────────────────────────────────────┐
-│                React Client                   │
-│  GraphCanvas (force-graph) │ ChatPanel        │
-│  NodeInspector             │ (streaming SSE)  │
+│                React Client                  │
+│  GraphCanvas (force-graph) │ ChatPanel       │
+│  NodeInspector             │ (streaming SSE) │
 └────────────────┬───────────┴──────────────────┘
                  │ HTTP / SSE
 ┌────────────────▼───────────────────────────────┐
@@ -286,15 +286,37 @@ All three required queries work out of the box:
 
 - ✅ **Streaming responses** via SSE — answer tokens stream to UI in real time
 - ✅ **Graph node highlighting** — SQL results automatically highlight referenced nodes in the graph
-- ✅ **Conversation memory** — last 6 turns sent as context for follow-up questions
+- ✅ **Conversation memory** — last 8 turns sent as context for follow-up questions
 - ✅ **SQL drawer** — expandable SQL query display per chat message
 - ✅ **Results table** — expandable data grid showing raw query results
 - ✅ **Auto-retry on SQL error** — LLM self-corrects with the error message
 - ✅ **Node inspector** — click any graph node to see metadata + connected neighbours
+- ✅ **JSONL / JSON / CSV support** — seed.js auto-detects format and infers table names
+- ✅ **Dynamic schema discovery** — FK relationships verified live at seed time, no hardcoded column names
+- ✅ **Debug endpoint** — `GET /api/graph/debug` shows edge discovery details for diagnostics
+
+---
+
+## Known Issues Fixed During Development
+
+### 0 edges on real dataset (fixed)
+The initial build assumed CSV format and hardcoded FK column names. The real dataset
+was JSONL with SAP-style field names. Fixed by:
+- Rewriting `seed.js` to handle `.jsonl`/`.json`/`.csv` with dynamic table creation
+- Adding FK discovery that spot-checks actual JOIN matches and writes `discovered_schema.json`
+- Rewriting `graphBuilder.js` and `schemaRegistry.js` to read from `discovered_schema.json`
+
+### Node labels overlapping at all zoom levels (fixed)
+`GraphCanvas.jsx` used `globalScale` to conditionally render labels and scale font size.
+Removed the `globalScale` dependency so labels render cleanly at all zoom levels.
+Fix applied independently using Antigravity.
 
 ---
 
 ## AI Coding Session
 
-AI tools used: Claude (claude.ai) for architecture design, service layer, and component scaffolding.
-Session transcript included in `/ai-session-log/` directory.
+AI tools used:
+- **Claude** (claude.ai) — architecture design, full backend + frontend scaffolding, bug diagnosis
+- **Antigravity** — `globalScale` label rendering fix in `GraphCanvas.jsx`
+
+Full session transcript: `/ai-session-log/AI_CODING_SESSION.md`
