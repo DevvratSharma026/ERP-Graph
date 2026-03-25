@@ -8,11 +8,7 @@ A full-stack system that unifies fragmented ERP data (Orders, Deliveries, Billin
 
 ## Live Demo
 
-> [Your deployment URL here]
-
-## Repository
-
-> [Your GitHub URL here]
+> https://erp-graph-frontend.onrender.com/
 
 ---
 
